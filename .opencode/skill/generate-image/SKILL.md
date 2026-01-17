@@ -15,7 +15,7 @@ our FAL_API_KEY should be in .env , if it's not there, ask the user for it
 
 always remember to safely utilize environment variables to prevent exposure 
 
-curl --request POST \
+source .env && curl --request POST \
   --url https://fal.run/fal-ai/nano-banana-pro \
   --header "Authorization: Key $FAL_API_KEY" \
   --header "Content-Type: application/json" \
@@ -26,7 +26,7 @@ curl --request POST \
 
 IF YOU NEED to edit an image (using reference images along with prompt)
 
-curl --request POST \
+source .env && curl --request POST \
   --url https://fal.run/fal-ai/nano-banana-pro/edit \
   --header "Authorization: Key $FAL_KEY" \
   --header "Content-Type: application/json" \
