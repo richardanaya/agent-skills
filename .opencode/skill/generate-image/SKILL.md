@@ -24,6 +24,21 @@ curl --request POST \
    }'
 
 
+IF YOU NEED to edit an image (using reference images along with prompt)
+
+curl --request POST \
+  --url https://queue.fal.run/fal-ai/nano-banana-pro/edit \
+  --header "Authorization: Key $FAL_KEY" \
+  --header "Content-Type: application/json" \
+  --data '{
+     "prompt": "make a photo of the man driving the car down the california coastline",
+     "image_urls": [
+       "https://storage.googleapis.com/falserverless/example_inputs/nano-banana-edit-input.png",
+       "https://storage.googleapis.com/falserverless/example_inputs/nano-banana-edit-input-2.png"
+     ]
+   }'
+
+
 Other properties
 
 prompt string
