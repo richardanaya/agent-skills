@@ -7,6 +7,8 @@ metadata:
   audience: testing
 ---
 
+BE SURE TO CLEAN UP SCREEN SHOTS AFTER YOU ARE DONE WITH EVERYTHING
+
 
 agent-browser open example.com
 agent-browser snapshot                    # Get accessibility tree with refs
