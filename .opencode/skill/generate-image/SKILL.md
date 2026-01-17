@@ -27,7 +27,7 @@ curl --request POST \
 IF YOU NEED to edit an image (using reference images along with prompt)
 
 curl --request POST \
-  --url https://queue.fal.run/fal-ai/nano-banana-pro/edit \
+  --url https://fal.run/fal-ai/nano-banana-pro/edit \
   --header "Authorization: Key $FAL_KEY" \
   --header "Content-Type: application/json" \
   --data '{
