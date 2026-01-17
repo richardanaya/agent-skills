@@ -7,6 +7,8 @@ metadata:
   audience: image gen
 ---
 
+don't  make a bash script, just execute the curl call as follows
+
 our FAL_API_KEY should be in .env , if it's not there, ask the user for it
 
 always remember to safely utilize environment variables to prevent exposure 
