@@ -11,13 +11,13 @@ generate 1K unless explicitly told otherwise
 
 don't  make a bash script, just execute the curl call as follows
 
-our FAL_API_KEY should be in .env , if it's not there, ask the user for it
+our FAL_KEY should be in .env , if it's not there, ask the user for it
 
 always remember to safely utilize environment variables to prevent exposure 
 
 source .env && curl --request POST \
   --url https://fal.run/fal-ai/nano-banana-pro \
-  --header "Authorization: Key $FAL_API_KEY" \
+  --header "Authorization: Key $FAL_KEY" \
   --header "Content-Type: application/json" \
   --data '{
      "prompt": "<prompt>"
@@ -37,6 +37,21 @@ source .env && curl --request POST \
        "https://storage.googleapis.com/falserverless/example_inputs/nano-banana-edit-input-2.png"
      ]
    }'
+
+IF YOU NEED TO UPLOAD AN IMAGE TO GET A PROPER URL FAL.AI can see, it's probably best to run some ad hoc python
+
+
+```python
+import os
+import fal_client
+
+# Ensure FAL_KEY is set in your environment
+os.environ["FAL_KEY"] = "your_key_here"
+
+# Uploads automatically and returns the CDN URL
+url = fal_client.upload_file("path/to/image.jpg")
+print(url)
+```
 
 
 Other properties
