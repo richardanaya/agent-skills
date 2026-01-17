@@ -9,6 +9,13 @@ metadata:
 
 BE SURE TO CLEAN UP SCREEN SHOTS AFTER YOU ARE DONE WITH EVERYTHING
 
+IF THIS NEEDS TO BE INSTALLED
+
+```
+npm install -g agent-browser
+agent-browser install # to get chromium downloaded
+```
+
 
 agent-browser open example.com
 agent-browser snapshot                    # Get accessibility tree with refs
