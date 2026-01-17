@@ -15,14 +15,13 @@ our FAL_API_KEY should be in .env , if it's not there, ask the user for it
 
 always remember to safely utilize environment variables to prevent exposure 
 
-response=$(curl --request POST \
-  --url https://queue.fal.run/fal-ai/nano-banana-pro \
+curl --request POST \
+  --url https://fal.run/fal-ai/nano-banana-pro \
   --header "Authorization: Key $FAL_API_KEY" \
   --header "Content-Type: application/json" \
   --data '{
      "prompt": "<prompt>"
-   }')
-REQUEST_ID=$(echo "$response" | grep -o '"request_id": *"[^"]*"' | sed 's/"request_id": *//; s/"//g')
+   }'
 
 
 Other properties
