@@ -41,18 +41,35 @@ source .env && curl --request POST \
 IF YOU NEED TO UPLOAD AN IMAGE TO GET A PROPER URL FAL.AI can see, it's probably best to run some ad hoc python
 
 
-```python
-import os
-import fal_client
-
-# Ensure FAL_KEY is set in your environment
-os.environ["FAL_KEY"] = "your_key_here"
-
-# Uploads automatically and returns the CDN URL
-url = fal_client.upload_file("path/to/image.jpg")
-print(url)
-```
-
+Two-Step Upload Process
+Step 1: Get Upload Token
+Endpoint: https://rest.alpha.fal.ai/storage/auth/token?storage_type=fal-cdn-v3
+POST https://rest.alpha.fal.ai/storage/auth/token?storage_type=fal-cdn-v3
+Headers:
+  Authorization: Key ${falKey}
+  Accept: application/json
+  Content-Type: application/json
+Body:
+  {} // Empty JSON object
+Response:
+{
+  base_upload_url: https://v3.fal.media,
+  token: upload_token_here
+}
+Step 2: Upload File
+Endpoint: ${base_upload_url}/files/upload (defaults to https://v3.fal.media/files/upload)
+POST ${base_upload_url}/files/upload
+Headers:
+  Authorization: Bearer ${upload_token}
+  Content-Type: image/png
+  X-Fal-File-Name: ${fileName}
+Body:
+  <raw file buffer>
+Response:
+{
+  access_url: https://...,  // or
+  url: https://...
+}
 
 Other properties
 
