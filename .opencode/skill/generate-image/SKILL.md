@@ -42,6 +42,8 @@ IF YOU NEED TO UPLOAD AN IMAGE TO GET A PROPER URL FAL.AI can see, it's probably
 
 
 Two-Step Upload Process
+
+```
 Step 1: Get Upload Token
 Endpoint: https://rest.alpha.fal.ai/storage/auth/token?storage_type=fal-cdn-v3
 POST https://rest.alpha.fal.ai/storage/auth/token?storage_type=fal-cdn-v3
@@ -70,6 +72,7 @@ Response:
   access_url: https://...,  // or
   url: https://...
 }
+```
 
 Other properties
 
