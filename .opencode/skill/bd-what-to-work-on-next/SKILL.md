@@ -19,6 +19,19 @@ Use this skill when you need to:
 - Review stale issues that may need attention
 - Understand the overall project status before planning
 
+## Git + JSONL: How bd Works
+
+**No database servers. No cloud APIs. Just Git + JSONL.**
+
+All issues live in `.beads/issues.jsonl` — a simple JSON Lines file that git tracks like any other code. This means:
+
+- **Pull → see updates**: `git pull` brings down everyone's issue changes
+- **Push → share yours**: `git push` publishes your issue updates to the team
+- **Merge conflicts are possible**: If two people edit the same issue simultaneously, you'll get a classic git merge conflict (just like with code)
+- **Hash IDs reduce conflicts**: Every issue has a unique hash ID, making simultaneous edits on *different* issues seamless
+
+This is version control for your project management — fully distributed, offline-capable, and conflict-aware.
+
 ## bd Commands to Use
 
 ### Check Ready Work (No Blockers)
