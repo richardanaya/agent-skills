@@ -12,12 +12,17 @@ description: Create a new product with a structured chain of related issues usin
 - Establish a structured workflow for the product lifecycle
 
 ## When to Use Me
+
+**⚠️ CRITICAL: Only use this skill for NEW projects without an existing `.beads/` directory!**
+
+**Test first:** Run `ls -la .beads/` — if you see `issues.jsonl`, use `bd-modify-product-description-and-tasks` instead.
+
 Use this skill when you need to:
-- Kick off a new product initiative
-- Set up a structured project with clear phases
-- Create a product roadmap with dependent tasks
-- Establish a complete development workflow
-- Onboard a new product with proper issue tracking
+- Kick off a **new** product initiative (no existing `.beads/` folder)
+- Set up a structured project with clear phases from scratch
+- Create a product roadmap with dependent tasks for a fresh project
+- Establish a complete development workflow on a new codebase
+- Onboard a new product with proper issue tracking (first-time setup)
 
 ## Git + JSONL: How bd Works
 
@@ -33,6 +38,17 @@ All issues live in `.beads/issues.jsonl` — a simple JSON Lines file that git t
 This is version control for your project management — fully distributed, offline-capable, and conflict-aware.
 
 ## bd Commands to Use
+
+### Check for Existing Project
+**BEFORE starting**: Test if `.beads/` already exists:
+```bash
+ls -la .beads/ 2>/dev/null || echo "No .beads/ directory found - safe to proceed"
+```
+
+**If `.beads/` already exists** with `issues.jsonl` and `config.yaml`:
+- **STOP** — This project already has an issue tracker configured
+- **Use `bd-modify-product-description-and-tasks` skill instead** to add/modify issues to the existing project
+- This skill is for **NEW** projects only
 
 ### Initialize Repository and Setup
 ```bash
@@ -124,16 +140,17 @@ Shows what issues are ready to work on (no blockers).
 
 ## Complete Workflow for Creating New Product
 
-1. **Initialize Git**: Run `git init` to create a git repository
-2. **Initialize bd**: Run `bd init --prefix <name>` to set up the database
-3. **Enable no-db mode**: Edit `.beads/config.yaml` and set `no-db: true` — this makes JSONL the source of truth
-4. **Fix Warnings**: If you see "LEGACY DATABASE" warnings, run `bd migrate --update-repo-id`
-5. **Create the Epic**: Use `bd create` with `--type epic` to establish the product container
-6. **Create Issues**: Use `bd create` with `-p <epic-id>` to create child issues
-7. **Chain Dependencies**: Use `bd dep add` to link issues in order
-8. **Add Labels**: Use `bd label add` for categorization and filtering
-9. **Verify Structure**: Use `bd status` to confirm everything is set up correctly
-10. **Verify no-db mode**: Check that `.beads/` only contains `config.yaml`, `issues.jsonl`, and `metadata.json` (no `beads.db`!)
+1. **Check for existing project**: Run `ls -la .beads/` — if it exists, use `bd-modify-product-description-and-tasks` skill instead
+2. **Initialize Git**: Run `git init` to create a git repository
+3. **Initialize bd**: Run `bd init --prefix <name>` to set up the database
+4. **Enable no-db mode**: Edit `.beads/config.yaml` and set `no-db: true` — this makes JSONL the source of truth
+5. **Fix Warnings**: If you see "LEGACY DATABASE" warnings, run `bd migrate --update-repo-id`
+6. **Create the Epic**: Use `bd create` with `--type epic` to establish the product container
+7. **Create Issues**: Use `bd create` with `-p <epic-id>` to create child issues
+8. **Chain Dependencies**: Use `bd dep add` to link issues in order
+9. **Add Labels**: Use `bd label add` for categorization and filtering
+10. **Verify Structure**: Use `bd status` to confirm everything is set up correctly
+11. **Verify no-db mode**: Check that `.beads/` only contains `config.yaml`, `issues.jsonl`, and `metadata.json` (no `beads.db`!)
 
 ## Typical Product Issue Chain
 
@@ -167,6 +184,14 @@ Epic: Product X Development
 - **Keep It Lean**: Don't over-engineer the chain - focus on real dependencies
 
 ## Troubleshooting
+
+### Project Already Has .beads/ Directory
+If you see `.beads/` with `issues.jsonl` already exists:
+```bash
+$ ls -la .beads/
+config.yaml  issues.jsonl  metadata.json
+```
+**Solution**: Use `bd-modify-product-description-and-tasks` skill instead. This skill is for creating new projects only. The modify skill will help you add to the existing issue tracker.
 
 ### "LEGACY DATABASE DETECTED" Warning
 If you see this warning:
