@@ -40,9 +40,34 @@ This is version control for your project management — fully distributed, offli
 git init
 # Step 2: Initialize bd with a project prefix
 bd init --prefix <project-name>
-# Step 3: If you see "LEGACY DATABASE" warnings, migrate the repo ID
+# Step 3: Enable no-db mode (CRITICAL - makes JSONL the source of truth)
+# Edit .beads/config.yaml and set: no-db: true
+# Step 4: If you see "LEGACY DATABASE" warnings, migrate the repo ID
 bd migrate --update-repo-id
 ```
+
+**CRITICAL: Enable no-db mode in `.beads/config.yaml`**
+
+Edit `.beads/config.yaml` and add:
+```yaml
+# Use no-db mode: load from JSONL, no SQLite, write back after each command
+# When true, bd will use .beads/issues.jsonl as the source of truth
+# instead of SQLite database
+no-db: true
+```
+
+This makes **`.beads/issues.jsonl` the source of truth** — every bd command reads from and writes directly to the JSONL file. No SQLite database. Full git tracking of every issue change.
+
+**Verify: Your `.beads/` folder should only contain 3 files:**
+```bash
+$ ls -la .beads/
+config.yaml       # Your configuration with no-db: true
+issues.jsonl      # All issues stored as JSON Lines (git-tracked)
+metadata.json     # Project metadata (prefix, repo binding, etc.)
+```
+
+**No `beads.db` file!** If you see a `.beads/beads.db` file, you haven't enabled no-db mode correctly. SQLite database files should not exist — all data lives in JSONL.
+
 **Important**: Always run `git init` before `bd init` to avoid repository ID warnings. If warnings persist after creation, run `bd migrate --update-repo-id`.
 
 ### Initialize Product Epic
@@ -101,12 +126,14 @@ Shows what issues are ready to work on (no blockers).
 
 1. **Initialize Git**: Run `git init` to create a git repository
 2. **Initialize bd**: Run `bd init --prefix <name>` to set up the database
-3. **Fix Warnings**: If you see "LEGACY DATABASE" warnings, run `bd migrate --update-repo-id`
-4. **Create the Epic**: Use `bd create` with `--type epic` to establish the product container
-5. **Create Issues**: Use `bd create` with `-p <epic-id>` to create child issues
-6. **Chain Dependencies**: Use `bd dep add` to link issues in order
-7. **Add Labels**: Use `bd label add` for categorization and filtering
-8. **Verify Structure**: Use `bd status` to confirm everything is set up correctly
+3. **Enable no-db mode**: Edit `.beads/config.yaml` and set `no-db: true` — this makes JSONL the source of truth
+4. **Fix Warnings**: If you see "LEGACY DATABASE" warnings, run `bd migrate --update-repo-id`
+5. **Create the Epic**: Use `bd create` with `--type epic` to establish the product container
+6. **Create Issues**: Use `bd create` with `-p <epic-id>` to create child issues
+7. **Chain Dependencies**: Use `bd dep add` to link issues in order
+8. **Add Labels**: Use `bd label add` for categorization and filtering
+9. **Verify Structure**: Use `bd status` to confirm everything is set up correctly
+10. **Verify no-db mode**: Check that `.beads/` only contains `config.yaml`, `issues.jsonl`, and `metadata.json` (no `beads.db`!)
 
 ## Typical Product Issue Chain
 
@@ -161,7 +188,11 @@ bd migrate --update-repo-id
 ```bash
 git init
 bd init --prefix my-project
+# CRITICAL: Edit .beads/config.yaml and set no-db: true
+echo "no-db: true" >> .beads/config.yaml
 bd migrate --update-repo-id  # If needed
+# Verify: Should only see config.yaml, issues.jsonl, metadata.json
+ls -la .beads/
 ```
 
 **Check what's ready to work on:**
