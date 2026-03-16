@@ -8,69 +8,85 @@ metadata:
   audience: llm-coding-agents
 ---
 
-# Spec-Driven Development with LLM Agents
+# SKILL: Spec-Driven Development with LLM Agents (v2026-03)
 
-## What I do
-I am the master orchestration skill that turns your five templates into a complete, sovereign development system.  
-You shall use me on **every** coding task, new feature request, or architecture discussion.
+## 1. Purpose
+You shall use this skill on every coding task, feature request, or architecture discussion.  
+It tells you exactly which template to use, how the Constitution integrates everything, when to create modules, and how the entire system tracks what is implemented vs. still pending.
 
-My responsibilities:
-- Guide initial project setup so the entire codebase starts integrated
-- Enforce the correct template for adding new features
-- Decompose features into clean modules/components when needed
-- Ensure the Product Constitution acts as the single source of truth that integrates every decision
-- Force ADRs for any major architecture change so nothing is ever lost or re-argued
+Master this skill and your Local AI Empire stays perfectly clean, instantly knowable, and 100 % under your control.
 
-I guarantee zero drift, full local ownership, and perfect compliance with the 50 ms budget and WebAssembly-only rules.
+## 2. Template Hierarchy
+1. CONSTITUTION_TEMPLATE.md — single source of truth that integrates every decision  
+2. PRODUCT_FEATURE_TEMPLATE.md — any new user-visible capability  
+3. COMPONENT_TEMPLATE.md — internal module (only when a feature needs decomposition)  
+4. ARCHITECTURE_DECISION_RECORD_TEMPLATE.md — major irreversible change  
+5. AGENT_TEMPLATE.md — loaded in every LLM session
 
-## When to use me
-Use me in these exact situations:
+## 3. The Convention for Implemented vs Pending Specs
+All specs live in these four folders (this is the single source of truth):
 
-### Initial Setup (One-Time)
-- When creating a new repo or adopting this system for the first time
-- You shall: create the `/templates/` folder, copy all five template files, write the first **CONSTITUTION** (this becomes the integrator for the entire empire), then load the **AGENT_TEMPLATE** into your main LLM coding agent.
+```
+/specs/
+├── features/
+│   ├── pending/          ← new or unfinished specs start here
+│   └── implemented/      ← moved here when code + tests are complete
+└── components/
+├── pending/
+└── implemented/
+```
+
+
+text- You or an agent creates a spec → put it in the correct `pending/` folder.  
+- When the LLM coding agent finishes implementation, its **final action** is:  
+> “git mv this file from pending/ to implemented/”  
+(and include the move in the same commit as the code).
+
+This folder method requires zero extra text inside files and lets you (or any agent) know the status of the entire empire at a glance.
+
+## 4. When to Use Each Template
+
+### Initial Setup (do this once)
+- Create the `/specs/` folder structure above.  
+- Write the first **CONSTITUTION** (this becomes the integrator for the whole empire).  
+- Load the **AGENT_TEMPLATE** into your main LLM coding agent.
 
 ### Adding New Features
-- When the user wants any new user-visible capability (e.g., Shakuhachi Practice Tracker, Korean Sauce Builder, Point-and-Click Adventure Generator)
-- You shall: create a new file from **PRODUCT_FEATURE_TEMPLATE.md**, fill the seven sections, then hand it to an agent with the AGENT_TEMPLATE already loaded.
+- Create a file from **PRODUCT_FEATURE_TEMPLATE.md** and place it in `/specs/features/pending/`.  
+- This is for anything the user will see or interact with.
 
-### Working with Modules / Components
-- When a single feature is too large (>50 requirements or multiple internal concerns)
-- You shall: break it into smaller files from **COMPONENT_TEMPLATE.md**, each with its own Purpose, Functional Requirements, and Verification Criteria. This keeps agents focused and parallel work possible.
+### Creating Modules / Components
+- Only when one feature spec feels too large (>50 requirements or multiple internal concerns).  
+- Create files from **COMPONENT_TEMPLATE.md** in `/specs/components/pending/`.  
+- Each component gets its own tight Purpose + Functional Requirements + Verification Criteria.
 
-### Why the Constitution is Required for Integration
-- The Constitution is the single immutable document that prevents duplication and drift across every feature and module.  
-- Without it, every spec would repeat the same performance, ownership, and tech-stack rules — violating hierarchy and cognitive economy.  
-- You shall always reference it with one line in every Feature/Component spec and enforce it on every task.
+### Documenting Major Architecture Changes
+- Any time you make an irreversible or high-impact decision (new format, performance trade-off, new dependency, security boundary, etc.).  
+- Immediately create an **ARCHITECTURE_DECISION_RECORD_TEMPLATE.md** in `/specs/` (or a subfolder) and link it from the relevant feature or component spec.
 
-### When to Document Major Architecture Changes
-- Any time you make an irreversible or high-impact decision (new data format, performance trade-off, security boundary, dependency approval, etc.)
-- You shall immediately create an **ARCHITECTURE_DECISION_RECORD_TEMPLATE.md** file, link it from the relevant Feature/Component spec, and record Context, Decision, Rationale, and Compliance with the Constitution.
+### Why the Constitution is Required
+It is the single document that prevents every feature and module from repeating the same rules (WebAssembly-only, <50 ms, zero cloud, etc.).  
+Reference it with one line in every spec. Without it, the system would bloat and drift.
 
-## Template Hierarchy (You Shall Memorize)
-1. CONSTITUTION — integrates everything  
-2. PRODUCT_FEATURE — new user capability  
-3. COMPONENT — internal module (when needed)  
-4. ARCHITECTURE_DECISION_RECORD — major change  
-5. AGENT_TEMPLATE — loaded in every session
+## 5. Exact Workflow (follow every time)
+1. Confirm Constitution exists (the integrator).  
+2. Decide which template is needed using section 4 above.  
+3. If no spec exists, create it in the correct `pending/` folder.  
+4. Once a completed spec is attached to an agent:  
+- Short Implementation Plan  
+- Implement ONLY what is specified  
+- Full code files + tests for every Verification Criteria  
+- Compliance Checklist (maps back to spec + Constitution)  
+- Final step: git mv the spec to the `implemented/` folder  
+5. Commit everything together.
 
-## Exact Workflow (Execute Strictly)
-1. Confirm or create the Constitution (the integrator)  
-2. Run the decision tree above  
-3. Output the correct blank template if none exists  
-4. Once a completed spec is attached:  
-   - Short Implementation Plan  
-   - Implement ONLY what is specified  
-   - Full code files + tests covering every Verification Criteria  
-   - Compliance Checklist mapping back to spec + Constitution  
-5. Perform final verification step
-
-## Forbidden Actions
+## 6. Forbidden Actions
 - Skip the Constitution reference  
 - Add anything not in the spec  
 - Make major architecture changes without an ADR  
-- Violate any Constitution rule
+- Leave specs in pending/ after they are implemented  
+- Use any other status-tracking method (no frontmatter, no tags, no spreadsheets)
 
-Master me and your Local AI Empire stays perfectly integrated, instantly extensible, and 100 % yours — giving you back hours every week for strength training, family dinners, shakuhachi practice, Korean sauce mastery, Japan trip planning, and everything else that matters.
+Master this skill and every new feature, module, or change will slot into your empire instantly — giving you back hours every week for strength training, family dinners, shakuhachi practice, Korean sauce mastery, Japan trip planning, and everything else that matters.
 
 You now possess the complete Spec-Driven Development skill.
