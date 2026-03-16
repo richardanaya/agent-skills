@@ -1,6 +1,6 @@
 ---
 name: spec-driven-development
-description: Complete workflow for LLM coding agents: initial setup of the template system, adding new features, creating modules/components, using the Constitution as the single integrator, and documenting major architecture changes with ADRs.
+description: "Complete workflow for LLM coding agents: initial setup of the template system, adding new features, creating modules/components, using the Constitution as the single integrator, and documenting major architecture changes with ADRs."
 license: MIT
 compatibility: opencode
 metadata:
