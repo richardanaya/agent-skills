@@ -23,7 +23,16 @@ Master this skill and your Local AI Empire stays perfectly clean, instantly know
 4. ARCHITECTURE_DECISION_RECORD_TEMPLATE.md — major irreversible change  
 5. AGENT_TEMPLATE.md — loaded in every LLM session
 
-## 3. The Convention for Implemented vs Pending Specs
+## 3. Critical Separation Principle (No Overlap)
+**The AGENT_TEMPLATE and the CONSTITUTION_TEMPLATE must never overlap or duplicate content.**
+
+- CONSTITUTION = immutable *rules of the product* (WebAssembly-only, <50 ms budget, zero cloud, ownership, etc.). This is referenced by every spec.
+- AGENT_TEMPLATE = *behavioral instructions for the LLM only* (how to read specs, output format, implementation plan, compliance checklist, etc.).
+
+The agent prompt shall always say “Load and enforce the Constitution” but shall never restate any Constitution rule.  
+This separation is mandatory — it prevents bloat, drift, and contradiction. Any violation must be corrected immediately.
+
+## 4. The Convention for Implemented vs Pending Specs
 All specs live in these four folders (this is the single source of truth):
 
 ```
@@ -36,20 +45,17 @@ All specs live in these four folders (this is the single source of truth):
 └── implemented/
 ```
 
-
 text- You or an agent creates a spec → put it in the correct `pending/` folder.  
 - When the LLM coding agent finishes implementation, its **final action** is:  
-> “git mv this file from pending/ to implemented/”  
-(and include the move in the same commit as the code).
+  > “git mv this file from pending/ to implemented/”  
+  (and include the move in the same commit as the code).
 
-This folder method requires zero extra text inside files and lets you (or any agent) know the status of the entire empire at a glance.
-
-## 4. When to Use Each Template
+## 5. When to Use Each Template
 
 ### Initial Setup (do this once)
 - Create the `/specs/` folder structure above.  
 - Write the first **CONSTITUTION** (this becomes the integrator for the whole empire).  
-- Load the **AGENT_TEMPLATE** into your main LLM coding agent.
+- Load the **AGENT_TEMPLATE** into your main LLM coding agent (it must reference the Constitution but never duplicate it).
 
 ### Adding New Features
 - Create a file from **PRODUCT_FEATURE_TEMPLATE.md** and place it in `/specs/features/pending/`.  
@@ -65,27 +71,27 @@ This folder method requires zero extra text inside files and lets you (or any ag
 - Immediately create an **ARCHITECTURE_DECISION_RECORD_TEMPLATE.md** in `/specs/` (or a subfolder) and link it from the relevant feature or component spec.
 
 ### Why the Constitution is Required
-It is the single document that prevents every feature and module from repeating the same rules (WebAssembly-only, <50 ms, zero cloud, etc.).  
-Reference it with one line in every spec. Without it, the system would bloat and drift.
+It is the single document that prevents every feature and module from repeating the same rules.  
+Reference it with one line in every spec. The AGENT_TEMPLATE enforces it without ever copying its content.
 
-## 5. Exact Workflow (follow every time)
+## 6. Exact Workflow (follow every time)
 1. Confirm Constitution exists (the integrator).  
-2. Decide which template is needed using section 4 above.  
+2. Decide which template is needed using section 5 above.  
 3. If no spec exists, create it in the correct `pending/` folder.  
 4. Once a completed spec is attached to an agent:  
-- Short Implementation Plan  
-- Implement ONLY what is specified  
-- Full code files + tests for every Verification Criteria  
-- Compliance Checklist (maps back to spec + Constitution)  
-- Final step: git mv the spec to the `implemented/` folder  
+   - Short Implementation Plan  
+   - Implement ONLY what is specified  
+   - Full code files + tests for every Verification Criteria  
+   - Compliance Checklist (maps back to spec + Constitution)  
+   - Final step: git mv the spec to the `implemented/` folder  
 5. Commit everything together.
 
-## 6. Forbidden Actions
+## 7. Forbidden Actions
+- Allow any overlap or duplication between AGENT_TEMPLATE and CONSTITUTION  
 - Skip the Constitution reference  
 - Add anything not in the spec  
 - Make major architecture changes without an ADR  
-- Leave specs in pending/ after they are implemented  
-- Use any other status-tracking method (no frontmatter, no tags, no spreadsheets)
+- Leave specs in pending/ after they are implemented
 
 Master this skill and every new feature, module, or change will slot into your empire instantly — giving you back hours every week for strength training, family dinners, shakuhachi practice, Korean sauce mastery, Japan trip planning, and everything else that matters.
 
